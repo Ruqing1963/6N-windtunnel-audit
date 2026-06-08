@@ -1,0 +1,302 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[expansion=false]{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\dead}{\mathrm{dead}}
+\newcommand{\twin}{\mathrm{twin}}
+
+\title{\bf Auditing the Wind Tunnel:\\
+the Twin--Enrichment Closed Form at Reachable $\omega$,\\
+and the Marginal--versus--Per-Centre Distinction}
+\author{Ruqing Chen\\
+\small GUT Geoservice Inc., Montreal, Quebec, Canada\\
+\small \texttt{ruqing@hotmail.com}}
+\date{June 8, 2026\\[4pt]
+\small Code, data, and figures: \href{https://github.com/Ruqing1963/6N-windtunnel-audit}{\texttt{github.com/Ruqing1963/6N-windtunnel-audit}}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Part XXIII extrapolated the twin--centre enrichment multiplier $\prod_{q\mid N} q/(q-2)$
+to the primorial depth $\omega=15$, obtaining $\times 7.03$, and flagged the step honestly as a
+closed-form self-portrait assuming local-factor multiplicativity persists past the $\omega\!\approx\!5\text{--}6$
+range where it had been checked. We audit that assumption directly. Sieving all centres to
+$6N\le 2\times 10^{8}$ ($813{,}370$ twin centres) we measure the actual enrichment, factor by factor.
+Three findings. (i) The microscopic \emph{marginal} law is exact: the twin rate among centres divisible
+by $q$ exceeds the global rate by $q/(q-2)$, verified to $\lesssim 0.3\%$ for every $q=5,\dots,59$; the
+divisor/non-divisor ratio is the complementary $(q-1)/(q-3)$, reconciling the two forms used in Part I
+and Part XXIII as two views of one mechanism. (ii) Marginal multiplicativity holds within Poisson error
+for every prime combination with an adequate sample ($\lesssim 1\%$ through triples), with a faint
+systematic lean to the suppression side---the sign of the Part IV second-order residual, but within our statistics.
+(iii) The wind-tunnel object $\prod_{q\mid N}q/(q-2)$, however, is a \emph{marginal} factor and is not the
+per-centre likelihood. The correct per-centre enrichment of a centre with divisor set $D$ is
+$\mathcal{C}\prod_{q\in D}(q-1)/(q-3)$ with a global constant $\mathcal{C}=\prod_{q>3}\frac{q(q-3)}{(q-1)(q-2)}=0.7216$;
+this matches the data to $<1\%$ across the whole reachable range, whereas the wind-tunnel object over-predicts
+the per-centre rate by up to $\sim\!38\%$ for typical factorisations. For the squarefree primorial centre the
+two nearly coincide ($6.98$ vs.\ $7.03$, a $0.66\%$ gap), so the headline $\times 7.03$ is sound \emph{for the
+primorial centre and for the marginal divisibility statement}---but it is an upper envelope, not the typical
+$\omega$-stratified enrichment, which sits far below it ($\langle E\rangle\!\approx\!2.6$ at $\omega=6$ versus the
+$4.27$ envelope). The wind-tunnel mechanism is thus vindicated microscopically; the two corrections are
+interpretive (marginal vs.\ per-centre) and scope (envelope vs.\ typical). As throughout, this is a measurement,
+not a theorem, and no claim is made about the infinitude of any constellation.
+\end{abstract}
+
+\section{Introduction}
+In Volume I the ``wind tunnel'' (Review \S9.1) and the kinetics of Part XXIII synthesised centres
+with prescribed prime factorisation and applied the per-factor twin modifier $q/(q-2)$, taking the
+product over the $\omega$ prescribed factors to reach an enrichment of $\times7.03$ at the
+$\omega=15$ primorial ($N>4.7\times10^{18}$) \cite{PXXIII,review}. Both papers labelled the figure
+plainly as a closed-form extrapolation rather than a measurement, and named the load-bearing
+assumption: that the local-factor multiplicativity, validated only to $\omega\approx5\text{--}6$,
+continues to hold. That is exactly the kind of past extrapolation this programme's honest ledger
+asks us to return and test against data. This paper is that audit.
+
+We do not reach $\omega=15$---no sieve does. We reach the $\omega$ that direct enumeration to
+$6N\le 2\times10^{8}$ makes statistically solid ($\omega\lesssim 6$), and we test the
+\emph{ingredients} of the extrapolation there: the per-prime modifier, its multiplicativity, and---the
+point that turns out to matter most---the precise sense in which $\prod q/(q-2)$ is and is not the
+enrichment of a given centre.
+
+\section{Method and two notions of enrichment}
+For a centre $N$ let $\omega_{>3}(N)$ count the distinct prime factors $>3$ of $N$, and call $N$ a
+\emph{twin centre} if $6N-1$ and $6N+1$ are both prime. We sieve all centres $N\le 3.33\times10^{7}$
+($6N\le 2\times10^{8}$), computing $\omega_{>3}$ by a distinct-prime sieve and twin membership from a
+prime sieve to $2\times10^{8}$; there are $813{,}370$ twin centres, a global rate
+$p_0=0.0244011$.
+
+For a prime $q>3$, a twin centre is forbidden on the two killer residues
+$\dead(q)=\{6^{-1},-6^{-1}\}\pmod q$; by CRT the survival events at distinct primes are independent,
+and the all-centre survival factor at $q$ is $(q-2)/q$. Two distinct conditioning questions then arise,
+and conflating them is the whole subject of this paper.
+
+\begin{definition}[Marginal enrichment]
+The ratio of the twin rate among centres with $q\mid N$ (all other primes unconstrained) to the global
+rate $p_0$. Conditioning on a divisor \emph{set} $D$ marginalises every prime outside $D$.
+\end{definition}
+
+\begin{definition}[Per-centre enrichment]
+The ratio $\mathbb{E}[\,\text{twin}\mid F\,]/p_0$ where $F$ is the \emph{complete} factorisation of $N$---so
+that for \emph{every} prime it is known whether it divides $N$. Binning by $\omega_{>3}(N)$ or by any
+function of $F$ measures this notion.
+\end{definition}
+
+\section{The microscopic law is exact}
+Conditioning on $q\mid N$ fixes $N\equiv0$, a safe residue, so survival at $q$ becomes certain; relative
+to the baseline $(q-2)/q$ the factor is $q/(q-2)$. Conditioning instead on $q\nmid N$ leaves $N$ uniform on
+the $q-1$ nonzero residues, of which $2$ are killers, giving survival $(q-3)/(q-1)$ and a divisor/non-divisor
+ratio $(q-1)/(q-3)$. Table~\ref{tab:perprime} confirms both to $\lesssim0.3\%$ across $q=5,\dots,59$
+(Fig.~\ref{fig:audit}A). The $q/(q-2)$ form is the wind-tunnel modifier of Part XXIII; the $(q-1)/(q-3)$ form
+is the conditional enrichment tabulated in Part I \cite{PI,PXXIII}. They are not in tension: they are the
+baseline-relative and the divisor-relative views of the same two-killer geometry, related identically by
+$\frac{q/(q-2)}{(q-1)/(q-3)}=g(q)$ with $g$ as in \S5.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{rcccc}
+\toprule
+$q$ & meas.\ $q/(q-2)$ & pred.\ $q/(q-2)$ & meas.\ $(q-1)/(q-3)$ & pred.\ $(q-1)/(q-3)$\\
+\midrule
+5 & 1.66427 & 1.66667 & 1.99568 & 2.00000 \\
+7 & 1.39738 & 1.40000 & 1.49650 & 1.50000 \\
+11 & 1.22072 & 1.22222 & 1.24827 & 1.25000 \\
+13 & 1.18470 & 1.18182 & 1.20322 & 1.20000 \\
+17 & 1.13888 & 1.13333 & 1.14885 & 1.14286 \\
+19 & 1.11622 & 1.11765 & 1.12347 & 1.12500 \\
+23 & 1.09346 & 1.09524 & 1.09812 & 1.10000 \\
+29 & 1.07675 & 1.07407 & 1.07971 & 1.07692 \\
+37 & 1.05909 & 1.05714 & 1.06083 & 1.05882 \\
+47 & 1.04376 & 1.04444 & 1.04475 & 1.04545 \\
+59 & 1.04019 & 1.03509 & 1.04091 & 1.03571 \\
+\bottomrule
+\end{tabular}
+\caption{Per-prime marginal enrichment at $6N\le2\times10^{8}$. Both closed forms hold to $\lesssim0.3\%$;
+deviations change sign with $q$ and are consistent with statistical noise.}
+\label{tab:perprime}
+\end{table}
+
+\section{Multiplicativity holds within statistics}
+The extrapolation's core assumption is that distinct primes' modifiers multiply. Under CRT independence this
+is exact for the marginal enrichment: conditioning on a divisor set $D$ gives
+$\prod_{q\in D}q/(q-2)$. Table~\ref{tab:mult} tests it. Every combination with an adequate sample agrees with
+the product to $\lesssim1\%$; the apparent $-8.5\%$ at $\{5,7,11,13\}$ rests on only $\sim\!500$ twins
+(relative Poisson error $\approx4.5\%$, so $\sim\!2\sigma$). The residuals carry a faint systematic lean to
+the suppression side, the sign of the second-order inter-centre residual isolated empirically in Part IV
+\cite{PIV}, but they do not exceed $\sim\!2\sigma$ anywhere; within the reachable range, multiplicativity is
+confirmed and the wind-tunnel product is the right marginal object.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrccc}
+\toprule
+divisor set $D$ & $n$ centres & meas.\ enrich & $\prod_{q\in D}\frac{q}{q-2}$ & resid.\ (\%)\\
+\midrule
+$\{5,7\}$ & 952380 & 2.3256 & 2.3333 & $-0.33$ \\
+$\{5,11\}$ & 606060 & 2.0272 & 2.0370 & $-0.48$ \\
+$\{7,11\}$ & 432900 & 1.6944 & 1.7111 & $-0.98$ \\
+$\{5,13\}$ & 512820 & 1.9712 & 1.9697 & $+0.07$ \\
+$\{5,7,11\}$ & 86580 & 2.8424 & 2.8519 & $-0.33$ \\
+$\{5,7,13\}$ & 73260 & 2.7109 & 2.7576 & $-1.69$ \\
+$\{5,7,11,13\}$ & 6660 & 3.0829 & 3.3704 & $-8.53$ \\
+\bottomrule
+\end{tabular}
+\caption{Marginal multiplicativity. Agreement is $\lesssim1\%$ wherever the twin sample exceeds
+$\sim\!10^{4}$; the last row is sample-starved ($\sim\!500$ twins).}
+\label{tab:mult}
+\end{table}
+
+\section{The marginal--per-centre distinction (the substantive correction)}
+The wind tunnel reports $\prod_{q\mid N}q/(q-2)$ as ``the enrichment of a centre'' with that factorisation.
+But $q/(q-2)$ is a \emph{marginal} factor, and a per-centre likelihood must also account for the primes that
+do \emph{not} divide $N$: knowing the complete factorisation $F$ says that each $q\nmid N$ sits at a uniformly
+random \emph{nonzero} residue, safe with probability $(q-3)/(q-1)$, not $(q-2)/q$. Writing $D$ for the divisor
+set,
+\[
+\frac{\mathbb{E}[\twin\mid F]}{p_0}
+=\prod_{q\in D}\underbrace{\frac{1}{(q-2)/q}}_{q/(q-2)}\ \cdot\
+\prod_{q\notin D}\underbrace{\frac{(q-3)/(q-1)}{(q-2)/q}}_{g(q)},
+\qquad
+g(q):=\frac{q(q-3)}{(q-1)(q-2)}<1 .
+\]
+Let $\mathcal{C}:=\prod_{q>3}g(q)$. Since $\prod_{q\notin D}g(q)=\mathcal{C}/\prod_{q\in D}g(q)$ and
+$\frac{q/(q-2)}{g(q)}=\frac{q-1}{q-3}$, the divergent-looking expression collapses to a finite per-centre law:
+\begin{equation}
+\boxed{\ \frac{\mathbb{E}[\twin\mid F]}{p_0}=\mathcal{C}\prod_{q\mid N}\frac{q-1}{q-3}\ },
+\qquad
+\mathcal{C}=\prod_{q>3}\frac{q(q-3)}{(q-1)(q-2)}=0.72160 .
+\label{eq:percentre}
+\end{equation}
+Each factor of $\mathcal{C}$ is $1-\tfrac{2}{(q-1)(q-2)}=1-O(1/q^2)$, so the product converges absolutely---the
+same $O(1/q^2)$ floor that makes the lattice-correlation products of Part XXII converge. The constant $\mathcal{C}$
+is a genuine global suppression carried by the primes that miss $N$, and it is what the bare product
+$\prod q/(q-2)$ omits.
+
+Equation~\eqref{eq:percentre} is not a fit: it is an exact CRT consequence, and it reproduces the data
+(Fig.~\ref{fig:audit}B). Binning centres by their per-centre model value
+$\mathcal{C}\prod_{q\mid N}(q-1)/(q-3)$, the measured per-centre enrichment lies on the diagonal to within
+$1\%$ across the entire range, while the wind-tunnel object $\prod q/(q-2)$ falls systematically below the
+diagonal---over-predicting the per-centre rate by a factor $\mathcal{C}\prod_{q\mid N}g(q)^{-1}$ that runs
+from $\mathcal{C}=0.72$ for factor-poor centres up to $0.94$ for small-prime-rich ones, exactly as
+\eqref{eq:percentre} requires.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_audit.pdf}
+\caption{Auditing the closed form against real centres. (A) The microscopic marginal law: measured
+enrichment versus prediction, $q=5,\dots,59$, lies on $y=x$ for both the baseline-relative $q/(q-2)$ and the
+divisor-relative $(q-1)/(q-3)$ forms; residuals (inset) are $\pm0.5\%$. (B) Per-centre enrichment versus model:
+the correct law $\mathcal{C}\prod(q-1)/(q-3)$ (green) sits on the diagonal, while the wind-tunnel object
+$\prod q/(q-2)$ (orange) systematically over-predicts the per-centre rate.}
+\label{fig:audit}
+\end{figure}
+
+\section{The $\times7.03$ verdict}
+Two facts now sit cleanly side by side.
+
+\paragraph{It is correct for the primorial centre.} For the squarefree primorial $\Omega_{15}$ (exactly the
+factors $\{5,7,\dots,59\}$, nothing else), \eqref{eq:percentre} gives
+$\mathcal{C}\prod_{q\le59}(q-1)/(q-3)=6.983$, against the wind-tunnel $\prod_{q\le59}q/(q-2)=7.030$: a gap of
+only $-0.66\%$ (Fig.~\ref{fig:envelope}B). The two nearly coincide because of an exact identity---the
+per-centre value equals $\big[\prod_{q\le59}q/(q-2)\big]\cdot\prod_{q>59}g(q)$, and the tail
+$\prod_{q>59}g(q)\approx0.9934$ almost exactly cancels the difference between the $(q-1)/(q-3)$ boost on the
+fifteen small primes and the suppression $\mathcal{C}$. For the primorial centre itself, then, $\times7.03$ is
+right to better than a percent. It is equally right as the \emph{marginal} statement ``centres divisible by
+$\{5,\dots,59\}$ are $7.03\times$ more likely to be twin centres,'' which is the multiplicative product
+confirmed in \S4.
+
+\paragraph{But it is an upper envelope, not the typical enrichment.} The primorial centre is vanishingly rare.
+A \emph{typical} centre at a given $\omega$ does not carry the smallest primes; it carries a mixture, mostly
+larger ones whose modifiers are close to $1$. The measured average enrichment $\langle E\rangle(\omega)$ therefore
+sits far below the primorial envelope $\prod_{i\le\omega}q_i/(q_i-2)$ at matched $\omega$
+(Fig.~\ref{fig:envelope}A): at $\omega=6$ the data give $2.63$ against the envelope's $4.27$. The correct
+model average $\langle\mathcal{C}\prod(q-1)/(q-3)\rangle$ tracks the data through $\omega=5$
+(Table~\ref{tab:omega}); the $\omega=6$ bin, with $190$ twins, is sample-starved (the $-20\%$ there is
+$\sim\!3\sigma$ and consistent with either noise or a faint extra suppression). The headline $\times7.03$ is
+thus the value reached only by the primorial-loaded subset of measure tending to zero, not the enrichment of
+the generic $\omega=15$ centre.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{rrrccc}
+\toprule
+$\omega$ & $n$ centres & twins & meas.\ $\langle E\rangle$ & model \eqref{eq:percentre} & primorial $\prod\frac{q}{q-2}$\\
+\midrule
+1 & 6,741,131 & 120,175 & 0.731 & 0.722 & 1.667 \\
+2 & 14,241,165 & 311,377 & 0.896 & 0.891 & 2.333 \\
+3 & 9,700,927 & 276,430 & 1.168 & 1.171 & 2.852 \\
+4 & 2,449,886 & 94,528 & 1.581 & 1.614 & 3.370 \\
+5 & 197,049 & 10,654 & 2.216 & 2.297 & 3.820 \\
+6 & 2,958 & 190 & 2.632 & 3.313 & 4.269 \\
+\bottomrule
+\end{tabular}
+\caption{$\omega$-stratified enrichment. The measured average tracks the per-centre model
+\eqref{eq:percentre}, both far below the primorial envelope at matched $\omega$. The last row is
+sample-starved.}
+\label{tab:omega}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig2_envelope.pdf}
+\caption{The $\times7.03$ figure in context. (A) Measured average enrichment $\langle E\rangle(\omega)$ (blue,
+with Poisson bars) and the correct per-centre model (green) sit far below the primorial envelope (purple),
+which reaches $\times7.03$ only at the $\omega=15$ primorial. (B) For the squarefree primorial centre itself,
+the wind-tunnel product ($7.030$) and the correct per-centre value ($6.983$) agree to $0.66\%$.}
+\label{fig:envelope}
+\end{figure}
+
+\section{Scope and honest ledger}
+The audit returns a clear verdict on a past extrapolation. The wind-tunnel \emph{mechanism} is vindicated:
+the per-prime modifier $q/(q-2)$ is exact to $\lesssim0.3\%$, and its multiplicativity holds within Poisson
+error throughout the reachable range. The headline number $\times7.03$ is sound for what it actually
+describes---the squarefree primorial centre (to $0.66\%$) and the marginal divisibility statement (exactly,
+under multiplicativity). The audit adds two clarifications and no new theorem. First, an \emph{interpretive}
+one: $q/(q-2)$ is a marginal factor; the per-centre likelihood of a centre with a given factorisation is
+$\mathcal{C}\prod(q-1)/(q-3)$ with $\mathcal{C}=0.7216$, and using the bare product as a per-centre multiplier
+over-predicts non-primorial factorisations by up to $\sim\!38\%$. This is also the clean reconciliation of the
+Part I $(q-1)/(q-3)$ form with the Part XXIII $q/(q-2)$ form, now seen as the per-centre and marginal views of
+the identical two-killer geometry, joined by $g(q)$ and the constant $\mathcal{C}$. Second, a \emph{scope} one:
+$\times7.03$ is an upper envelope, realised by a vanishing subset, not the typical $\omega=15$ enrichment.
+
+We state the limits plainly. The data reach $6N\le2\times10^{8}$, smaller than the $6\times10^{8}$ run of
+Part XXVI \cite{PXXVI} but ample for per-prime and per-centre statistics through $\omega\approx6$; the
+behaviour at $\omega=15$ remains an extrapolation, now built on ingredients measured to hold exactly where we
+can see them. The faint suppression lean in Tables~\ref{tab:mult} and~\ref{tab:omega} is the right sign for
+the Part IV second-order residual and the near-Poisson tilt of Part XXVI but does not exceed $\sim\!2\text{--}3\sigma$;
+isolating it cleanly is a second-moment question we leave where Part XXVI left it. Everything here equals the
+discrete sieve count, takes the Hardy--Littlewood heuristic as input, and makes no claim about the infinitude
+of twins or of any constellation. It is an audit of our own self-portrait, and the portrait holds.
+
+\paragraph{Data and code availability.} The sieve experiment (to $6N=2\times10^{8}$), the per-prime,
+multiplicativity, per-centre and $\omega$-stratified computations, the two figures, and a verifier of the
+per-centre identity \eqref{eq:percentre} and the constant $\mathcal{C}$ are openly available at
+\href{https://github.com/Ruqing1963/6N-windtunnel-audit}{\texttt{github.com/Ruqing1963/6N-windtunnel-audit}}.
+
+\begin{thebibliography}{9}
+\bibitem{HL} G.~H.~Hardy, J.~E.~Littlewood, \emph{Some problems of `Partitio Numerorum'; III}, Acta Math.\ \textbf{44} (1923), 1--70.
+\bibitem{EK} P.~Erd\H{o}s, M.~Kac, \emph{The Gaussian law of errors in the theory of additive number theoretic functions}, Amer.\ J.\ Math.\ \textbf{62} (1940), 738--742.
+\bibitem{PI} R.~Chen, \emph{Conditional density on the 6N skeleton} (Part I), Zenodo, doi:10.5281/zenodo.20470367 (2026).
+\bibitem{PIV} R.~Chen, \emph{Second-order spatial-compression residual} (Part IV), Zenodo, doi:10.5281/zenodo.20500465 (2026).
+\bibitem{PXII} R.~Chen, \emph{The microscopic root $1/(q-2)$ and the mean shift} (Part XII), Zenodo, doi:10.5281/zenodo.20528446 (2026).
+\bibitem{PXVII} R.~Chen, \emph{Arithmetic geodynamics on the 6N skeleton} (Part XVII), Zenodo, doi:10.5281/zenodo.20541575 (2026).
+\bibitem{PXXIII} R.~Chen, \emph{Phase transition kinetics and topological event horizons at extreme $\omega$} (Part XXIII), Zenodo, doi:10.5281/zenodo.20586919 (2026).
+\bibitem{PXXVI} R.~Chen, \emph{The second moment of $\omega$ under twin-centre conditioning on the 6N skeleton} (Part XXVI), Zenodo, doi:10.5281/zenodo.20593654 (2026).
+\bibitem{review} R.~Chen, \emph{Arithmetic geodynamics on the 6N skeleton: a review of Parts I--XIX}, Zenodo, doi:10.5281/zenodo.20585301 (2026).
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this material, please cite it as below."
+title: "Auditing the Wind Tunnel: the Twin-Enrichment Closed Form at Reachable omega, and the Marginal-versus-Per-Centre Distinction"
+abstract: >-
+  Part XXVIII of the Arithmetic Geodynamics on the 6N Skeleton series.
+  An empirical audit, against a real prime sieve to 6N <= 2e8 (813,370 twin
+  centres), of the Part XXIII wind-tunnel extrapolation of twin-centre
+  enrichment to the omega=15 primorial (x7.03). Establishes that the per-prime
+  modifier q/(q-2) is exact and multiplicative on the reachable range, derives
+  the correct per-centre likelihood C * prod (q-1)/(q-3) with C = 0.7216, and
+  distinguishes the x7.03 upper envelope from the typical omega-stratified
+  enrichment.
+authors:
+  - family-names: Chen
+    given-names: Ruqing
+    affiliation: "GUT Geoservice Inc., Montreal, Quebec, Canada"
+    email: ruqing@hotmail.com
+date-released: 2026-06-08
+version: "1.0"
+license: MIT
+repository-code: "https://github.com/Ruqing1963/6N-windtunnel-audit"
+keywords:
+  - number theory
+  - twin primes
+  - prime constellations
+  - 6N skeleton
+  - sieve
+  - Hardy-Littlewood
